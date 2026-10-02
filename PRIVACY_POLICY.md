@@ -1,6 +1,6 @@
 # QA Bug to Regression Test — Privacy Policy
 
-Last updated: September 25, 2026
+Last updated: October 2, 2026
 
 Developer: Orhan Eren Kara
 
@@ -18,9 +18,24 @@ The extension may process the following data when you use its features:
 - Context diagnostics such as iframe presence/focus, popup or new-tab events, recording-tab changes, and supported navigation changes.
 - Optional screenshot evidence captured only when the user explicitly requests it.
 - Extension settings, including the selected interface language.
+- Feedback topic, message, and optional reply email address, only when the user submits the Feedback / Contact form.
 - Session timestamps and other metadata required to restore the active or most recently completed session.
 
 The extension does not intentionally collect general browsing history outside the current QA recording workflow.
+
+## Feedback / Contact
+
+The envelope button opens an optional feedback form. You can select a topic, enter a message, and optionally provide an email address if you would like a reply.
+
+Only when you select **Send**, the selected topic, message, and optional email address are sent over HTTPS to Formspree and delivered to the developer's email inbox. This information is used to handle your feedback or support request and reply when an email address is provided. Providing an email address is optional; submitting feedback is not required to use the extension's recording or generation features.
+
+Recorded actions, tested-page URLs, assertions, bug details, generated reports, Playwright drafts, and screenshots are not automatically attached to feedback. Anything you manually include in your message will be sent as part of that message. Feedback text is not automatically redacted; please do not include passwords, API keys, tokens, or other sensitive information.
+
+Draft feedback is kept only in side-panel memory and is discarded when the form or panel closes. A failed submission retains the draft while the form remains open so you can retry. Feedback drafts are not saved in `chrome.storage.local`.
+
+Formspree processes submitted information and may process technical connection data such as IP address, browser information, and access times. Formspree states that it uses infrastructure in the United States and may process information in other countries where it operates. Its handling and retention of information are described in the [Formspree Privacy Policy](https://formspree.io/legal/privacy-policy/).
+
+Submitted messages may remain in Formspree and the developer's email inbox until deleted. Clearing extension storage or uninstalling the extension does not delete previously submitted feedback. To request access, correction, or deletion of feedback held by the developer, contact **orhanerenkara.dev@gmail.com**. Formspree's own retention obligations and policies may also apply.
 
 ## Local storage
 
@@ -128,6 +143,8 @@ The extension does not use session data for advertising, credit eligibility, fin
 
 This version does not intentionally send recorded session data, bug reports, Playwright drafts, or screenshots to a developer-operated backend or cloud service.
 
+Feedback submissions are a separate, user-directed transfer to Formspree and the developer's email inbox, as described in Feedback / Contact above. This does not transfer recorded session data unless the user manually includes it in the message.
+
 Downloaded files, clipboard content, and any data manually shared by the user outside the extension are outside the extension's control.
 
 ## Analytics and tracking
@@ -158,12 +175,18 @@ Used to inject the recorder into the website where the user explicitly starts a 
 
 Used for user-initiated screenshot capture and other actions that require access to the currently active recording tab.
 
+### Formspree host permission
+
+The extension declares `https://formspree.io/*` as a host permission so the side panel can send user-submitted feedback to the fixed Formspree endpoint. This permission is used for the feedback request and does not cause the recorder to run on Formspree pages automatically. No remote Formspree JavaScript is loaded by the extension.
+
 ### Optional host permissions
 
 The extension declares optional access to:
 
 - `http://*/*`
 - `https://*/*`
+- `http://localhost/*`
+- `http://127.0.0.1/*`
 
 These permissions allow the extension to request access to the website where the user chooses to start a QA recording session.
 
@@ -180,6 +203,8 @@ The extension currently stores:
 These remain in local browser storage according to the extension's current storage behavior.
 
 Users can remove the extension or clear extension storage through Chrome to remove locally stored extension data.
+
+Submitted feedback is retained separately in Formspree and the developer's email inbox as described above. You can request deletion by emailing orhanerenkara.dev@gmail.com; removing the extension does not delete those submissions.
 
 Files that users have downloaded, copied, or shared separately are not automatically deleted by the extension.
 
@@ -212,3 +237,4 @@ For privacy, data handling, or support questions:
 **Email:** orhanerenkara.dev@gmail.com
 
 © 2026 Orhan Eren Kara. All rights reserved.
+
